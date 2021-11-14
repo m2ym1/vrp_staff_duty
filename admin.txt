@@ -1,0 +1,105 @@
+
+
+
+ADAUGA UN AND LA FIECARE PERMISIUNES
+
+and vRP.hasGroup(user_id,"aduty")
+
+
+Model:
+
+
+
+
+
+vRP.registerMenuBuilder("main", function(add, data)
+	local user_id = vRP.getUserId(data.player)
+	if user_id ~= nil then
+	  local choices = {}
+  
+	  -- build admin menu
+	  choices["Admin"] = {function(player,choice)
+		vRP.buildMenu("admin", {player = player}, function(menu)
+		  menu.name = "Admin"
+		  menu.css={top="75px",header_color="rgba(200,0,0,0.75)"}
+		  menu.onclose = function(player) vRP.closeMenu(player) end -- nest menu
+  
+		  if vRP.isUserFondator(user_id) and vRP.hasGroup(user_id,"aduty") then
+			  menu["Add/Remove VIP"] = {ch_givevip}
+			  menu["Add/Remove SPONSOR"] = {ch_givesponsor}
+		  end		
+		  if vRP.isUserCoFondator(user_id) and vRP.hasGroup(user_id,"aduty") then
+			  menu["Add/Remove Admin"] = {ch_addAdmin}
+			  menu["Add group"] = {ch_addgroup}
+			  menu["Give money"] = {ch_givemoney}
+			  menu["Give item"] = {ch_giveitem}
+			  menu["Give Raven"] = {ch_givekrcoins}
+			  menu["Remove group"] = {ch_removegroup}
+			  menu["Take item"] = {ch_takeitem}
+			  menu["Take Raven"] = {ch_takecoins}
+			  menu["Take money"] = {ch_takemoney}
+		  end
+		  if vRP.isUserManager(user_id) and vRP.hasGroup(user_id,"aduty") then
+			  menu["Add/Remove Admin"] = {ch_addAdmin}
+		  end
+		  if vRP.isUserHeadofStaff(user_id) and vRP.hasGroup(user_id,"aduty") then
+			  menu["Add/Remove Admin"] = {ch_addAdmin}
+		  end
+		  if vRP.isUserAdministrator(user_id) and vRP.hasGroup(user_id,"aduty") then
+			  menu["Unban"] = {ch_unban}
+		  end
+		  if vRP.isUserSuperAdmin(user_id) and vRP.hasGroup(user_id,"aduty") then
+			  menu["Unban"] = {ch_unban}
+		  end
+		  if vRP.isUserAdmin(user_id) and vRP.hasGroup(user_id,"aduty") then
+			  menu["Anunt Admin"] = {ch_ann}
+			  menu["Ban Permanent"] = {ch_ban}
+			  menu["Noclip"] = {ch_noclip}
+			  menu["Unban"] = {ch_unban}
+			  menu["TpToCoords"] = {ch_tptocoords}
+			  menu["Coords"] = {ch_coords}
+			  menu["Ban Temporar"] = {ch_banTemp}
+		  end
+		  if vRP.isUserModeratorAvansat(user_id) and vRP.hasGroup(user_id,"aduty") then
+			  menu["Anunt Admin"] = {ch_ann}
+			  menu["Ban Permanent"] = {ch_ban}
+			  menu["Noclip"] = {ch_noclip}
+			  menu["Unban"] = {ch_unban}
+			  menu["TpToCoords"] = {ch_tptocoords}
+			  menu["Coords"] = {ch_coords}
+			  menu["Ban Temporar"] = {ch_banTemp}
+		  end
+		  if vRP.isUserModerator(user_id) and vRP.hasGroup(user_id,"aduty") then
+			  menu["Ban Permanent"] = {ch_ban}
+			  menu["Noclip"] = {ch_noclip}
+			  menu["TpToCoords"] = {ch_tptocoords}
+			  menu["Coords"] = {ch_coords}
+			  menu["Ban Temporar"] = {ch_banTemp}
+		  end
+		  if vRP.isUserHelperAvansat(user_id) and vRP.hasGroup(user_id,"aduty") then
+			  menu["TpToMe"] = {ch_tptome}
+			  menu["Food & Drink"] = {ch_food}
+			  menu["TpTo"] = {ch_tpto}
+			  menu["Coords"] = {ch_coords}
+			  menu["Check Player"] ={ch_checkplayer}
+		  end
+		  if vRP.isUserHelper(user_id) and vRP.hasGroup(user_id,"aduty") then
+			  menu["TpToMe"] = {ch_tptome}
+			  menu["Food & Drink"] = {ch_food}
+			  menu["TpTo"] = {ch_tpto}
+			  menu["Check Player"] ={ch_checkplayer}
+		  end	
+		  if vRP.isUserTrialHelper(user_id) and vRP.hasGroup(user_id,"aduty") then
+			  menu["TpToMe"] = {ch_tptome}
+			  menu["Food & Drink"] = {ch_food}
+			  menu["TpTo"] = {ch_tpto}
+		  end	
+		  menu["Admin Ticket"] = {ch_calladmin, "Fa ticket doar daca este ceva importat. Pentru intrebari foloseste comanda /n."}
+  
+		  vRP.openMenu(player,menu)
+		end)
+	  end}
+  
+	  add(choices)
+    end
+  end)

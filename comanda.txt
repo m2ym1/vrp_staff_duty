@@ -1,0 +1,42 @@
+
+Adauga in chat/sv_chat.lua
+
+
+
+
+RegisterCommand("aduty", function(player, args)
+    local user_id = vRP.getUserId({player})
+	local nume = GetPlayerName(player)
+    if vRP.isUserTrialHelper({user_id}) then
+        if vRP.hasGroup({user_id,"aduty"}) then
+            vRP.removeUserGroup({user_id,"aduty"})
+			vRPclient.notify(player,{"~r~DUTY: ~w~OFF"})	
+        else
+            vRP.addUserGroup({user_id,"aduty"})
+			vRPclient.notify(player,{"~g~DUTY: ~w~ON"})
+    end
+end
+end)
+
+
+RegisterCommand("cduty", function(player, args)
+    local user_id = vRP.getUserId({player})
+    if args[1] and args[1] ~= "" then
+        local target_id = parseInt(args[1])
+        local target_src = vRP.getUserSource({target_id})
+        if target_src then
+            local name = vRP.getPlayerName({target_src})
+            local job = vRP.getUserGroupByType({target_id, 'job'})
+            local ore = vRP.getUserHoursPlayed({target_id})
+            if vRP.hasGroup({target_id,"aduty"}) then
+                TriggerClientEvent("chatMessage", player, "^0[^9KRONIC^0] ^0ID: ^1"..target_id.." ^0este ^1ON-DUTY")
+            else
+                TriggerClientEvent("chatMessage", player, "^0[^9KRONIC^0] ^0ID: ^1"..target_id.." ^0este ^1OFF-DUTY")
+            end
+        else
+            TriggerClientEvent("chatMessage", player, "^0[^9KRONIC^0] ^1Jucatorul nu este conectat !")
+        end
+    else
+        TriggerClientEvent("chatMessage", player, "^0[^9KRONIC^0] ^1/cduty <user_id>")
+    end
+end, false)

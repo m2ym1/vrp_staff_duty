@@ -1,0 +1,30 @@
+
+Adauga and vRP.hasGroup({user_id,"aduty"}) la fiecare permisiune 
+EX:
+
+
+
+vRP.registerMenuBuilder({"admin", function(add, data)
+  local user_id = vRP.getUserId({data.player})
+  if user_id ~= nil then
+    local choices = {}
+	if vRP.isUserHeadofStaff({user_id}) and vRP.hasGroup({user_id,"aduty"}) then
+		choices["SpawnVeh"] = ch_spawnveh
+	end
+	if vRP.isUserAdministrator({user_id}) and vRP.hasGroup({user_id,"aduty"}) then
+		choices["Blips"] = ch_blips
+		choices["TpToWaypoint"] = choice_tptowaypoint
+	end
+	if vRP.isUserHelper({user_id}) and vRP.hasGroup({user_id,"aduty"}) then
+		choices["Admin Jail"] = a_jail
+		choices["Admin Revive"] = a_revive
+		choices["Admin Jail Offline"] = a_offlineJail
+		choices["Remove Jail"] = ch_unjail
+		choices["Admin UnJail"] = a_unjail
+		choices["Mute"] = a_mute
+		choices["UnMute"] = a_unmute
+	end
+	
+    add(choices)
+   end
+end})
